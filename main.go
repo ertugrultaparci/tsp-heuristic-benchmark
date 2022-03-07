@@ -7,6 +7,6 @@ import (
 
 func main() {
 
-	res := simmulatedannealing.Simmulationannealing("data/data.tsp", 100, 100)
+	res := simmulatedannealing.SimulationAnnealing("data/ch150.tsp", 100, 100)
 	fmt.Println("Simulation Annealing Result is:", res)
 }

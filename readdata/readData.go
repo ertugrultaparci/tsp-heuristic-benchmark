@@ -10,26 +10,30 @@ import (
 )
 
 type Node struct {
-	id      int
-	x_coord float64
-	y_coord float64
-	choosen bool
+	id     int
+	x      float64
+	y      float64
+	chosen bool
 }
 
 type Nodes []Node
 
-func Read_data(filename string) Nodes {
+func ReadData(filename string) Nodes {
 	data := Nodes{}
 
 	f, err := os.Open(filename)
 
 	if err != nil {
 		log.Fatal("Error")
-		os.Exit(1)
 	}
 
 	// when reading (mission of the function) finished, close the file:
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
 
 	bf := bufio.NewReader(f)
 	//n := 0
@@ -56,13 +60,13 @@ func Read_data(filename string) Nodes {
 					fb := strings.Index(line, " ")
 					nid := string(line[:fb])
 					sb := strings.Index(line[fb+1:], " ")
-					x_c := line[fb+1 : fb+sb+1]
-					y_c := line[fb+sb+2:]
+					x := line[fb+1 : fb+sb+1]
+					y := line[fb+sb+2:]
 
 					var n Node
 					n.id, _ = strconv.Atoi(nid)
-					n.x_coord, _ = strconv.ParseFloat(x_c, 64)
-					n.y_coord, _ = strconv.ParseFloat(y_c, 64)
+					n.x, _ = strconv.ParseFloat(x, 64)
+					n.y, _ = strconv.ParseFloat(y, 64)
 
 					data = append(data, n)
 
